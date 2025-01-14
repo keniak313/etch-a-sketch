@@ -84,7 +84,7 @@ canvas.addEventListener("mousemove", (e) => {
 function paint(e){
     let point = document.elementFromPoint(e.clientX, e.clientY);
     if(point.nodeName === "SQUARE"){
-        point.classList.add("blackSquare");
+        point.style = "background-color: " + colorPicker.value;
     }
 }
 
