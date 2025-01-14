@@ -1,5 +1,10 @@
 const body = document.querySelector("body");
 const btn = document.querySelector("button");
+const canvas = document.querySelector(".canvas");
+const slider = document.querySelector("#slider.slider");
+const sliderInfo = document.querySelector("#slider.info");
+const gridCheckBox = document.querySelector(".showGrid");
+const colorPicker = document.querySelector(".colorPicker");
 
 
 let gridSizeX = 16;
@@ -7,17 +12,42 @@ let gridSizeY = 16;
 
 let mouseDown = false;
 
+//Show Grid
+gridCheckBox.addEventListener("click", () => {
+    if(gridCheckBox.checked){
+        canvas.childNodes.forEach((child) => {child.childNodes.forEach((node) => node.classList.add("showGrid"))})
+    }else{
+        canvas.childNodes.forEach((child) => {child.childNodes.forEach((node) => node.classList.remove("showGrid"))})
+    }
+}
+);
+
+colorPicker.addEventListener("mousedown", () => console.log(colorPicker.value));
+let paintColor = colorPicker.value;
+
+
+//Change grid size based on slider
+slider.value = gridSizeX;
+sliderInfo.textContent = "Grid size: " + slider.value;
+
+slider.addEventListener("input", () =>{
+    gridSizeX = slider.value;
+    gridSizeY = slider.value;
+    sliderInfo.textContent = "Grid size: " + slider.value;
+    createGrid();
+});
+
+//Grid creation
 createGrid();
 
 btn.addEventListener("click", createGrid);
 
 function createGrid () {
-    const container = document.querySelector("#container");
-    container.textContent = "";
+    canvas.textContent = "";
     let y = 0;
     while(gridSizeY > y){
         y++;
-        container.appendChild(createGridRow());
+        canvas.appendChild(createGridRow());
         console.log("Adding Row to Container")
     };
     console.log("Grid Created");
@@ -30,6 +60,9 @@ function createGridRow (){
     while(gridSizeX > x){
         x++;
         const square = document.createElement("square");
+        if(gridCheckBox.checked){
+            square.classList.add("showGrid");
+        };
         gridRow.appendChild(square);
         console.log("Adding Square to Row")
     };
@@ -37,12 +70,15 @@ function createGridRow (){
     return gridRow;
 }
 
-document.addEventListener("click", e => {
+//Painting on Canvas
+canvas.addEventListener("click", (e) => {
     paint(e);
+    //e.preventDefault();
 }, {passive: true});
 
-document.addEventListener("mousemove", e => {
+canvas.addEventListener("mousemove", (e) => {
     if(mouseDown){paint(e);}
+    //e.preventDefault();
 }, {passive: true});
 
 function paint(e){
@@ -52,5 +88,5 @@ function paint(e){
     }
 }
 
-document.onmousedown = () => mouseDown = true;
-document.onmouseup = () => mouseDown = false;
+canvas.onmousedown = (e) => {mouseDown = true; e.preventDefault()};
+canvas.onmouseup = (e) => {mouseDown = false; e.preventDefault()};

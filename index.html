@@ -6,8 +6,21 @@
     <title>Document</title>
     <link rel="stylesheet" href="./styles.css">
     <script src="./scripts.js" defer></script>
-</head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Jersey+15&family=Pixelify+Sans:wght@400..700&family=Tiny5&display=swap');
+    </style>
 <body> 
-    <button type="button">CREATE</button>
+    <div id="header">- Etch-A-Sketch -</div>
+    <div id="content">
+        <div id="container" class="menu">
+            <div id="slider" class="info">10</div>
+            <input id="slider" type="range" min="10" max="100" class="slider">
+            <div>Show grid: <input type="checkbox" class="showGrid" checked></div>
+            <div>Color: <input type="color" class="colorPicker"></div>
+            <button type="button">Clear</button>
+        </div>
+        <div id="container" class="canvas"></div>
+    </div>
+    <div id="footer">Copyright - Paweł Miklaszewski 2025</div>
 </body>
 </html>
