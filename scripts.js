@@ -60,6 +60,7 @@ function createGridRow (){
     while(gridSizeX > x){
         x++;
         const square = document.createElement("square");
+        square.style = "opacity: 1; background: white";
         if(gridCheckBox.checked){
             square.classList.add("showGrid");
         };
@@ -81,11 +82,23 @@ canvas.addEventListener("mousemove", (e) => {
     //e.preventDefault();
 }, {passive: true});
 
+let op = 0.5;
+
 function paint(e){
     let point = document.elementFromPoint(e.clientX, e.clientY);
     if(point.nodeName === "SQUARE"){
-        point.style = "background-color: " + colorPicker.value;
+        point.style.background = colorPicker.value;
+        //changeOpacity(point);
     }
+}
+
+function changeOpacity(point) {
+    let curOpacity = 0;
+    let newOpacity = 0;
+    curOpacity = point.style.getPropertyValue("opacity");
+    newOpacity = curOpacity - 0.1;
+    point.style.opacity = newOpacity;
+    return point;
 }
 
 canvas.onmousedown = (e) => {mouseDown = true; e.preventDefault()};
